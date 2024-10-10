@@ -2,6 +2,7 @@ import requests
 from dotenv import load_dotenv
 from datetime import datetime
 import os
+import csv
 
 #load env variables
 load_dotenv()
@@ -37,14 +38,24 @@ url = BASE_URL + results_endpoint
 # Api request
 response = requests.get(url, headers=headers, params=params)
 
+keys = ["_id", "uid", "wpm", "rawWpm", "acc", "mode", "mode2", "timestamp", "testDuration", "consistency", "keyConsistency"]
 
 # Get data
 
 try:
     data = response.json()  # Parse JSON
-    with open ("result.txt", 'wb') as file:
-        for row in response:
-            file.write(row)
+    with open ("result.csv", 'w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=keys, delimiter=';')
+
+    # Write the header
+        writer.writeheader()
+
+        # Write each row to the CSV file
+        for row in data['data']:
+            # Extract only the specified keys
+            filtered_row = {key: row[key] for key in keys if key in row}
+            writer.writerow(filtered_row)
+    
             
 except Exception as e:
     with open ('logfile.log', 'a') as file:
