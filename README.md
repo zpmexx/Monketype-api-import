@@ -1,26 +1,15 @@
 
-## Typing History Stats (Last Updated: 12/11/2024 15:10)
+## Typing History Stats (Last Updated: 12/11/2024 15:41)
 
-### Overall Stats
+| **Metric**               | **Overall Stats**       | **Last 10 Tests Stats**  |
+|--------------------------|-------------------------|--------------------------|
+| **Total Entries**        | 850           | 10                       |
+| **Average WPM**          | 102.64           | 102.19    |
+| **Average Accuracy**     | 90.83%          | 90.07%   |
+| **Max WPM**              | 129.13               | 114.38        |
+| **Min WPM**              | 64.77               | 89.98                        |
+| **Total Duration**       | 07:06:06        | 00:05:00                        |
 
-| Metric              | Value               |
-|---------------------|---------------------|
-| **Total Entries**   | 850       |
-| **Average WPM**     | 102.64       |
-| **Average Accuracy**| 90.83%      |
-| **Max WPM**         | 129.13           |
-| **Min WPM**         | 64.77           |
-| **Total Duration**  | 07:06:06    |
-
----
-
-### Last 10 Tests Stats
-
-| Metric                     | Value               |
-|----------------------------|---------------------|
-| **Average WPM (Last 10)**  | 102.19 |
-| **Average Accuracy (Last 10)** | 90.07% |
-| **Max WPM (Last 10)**      | 114.38       |
 
 ---
 
@@ -31,5 +20,4 @@
 - **Slowest Performance**: The lowest WPM recorded is 64.77.
 - **Total Time Spent**: You've spent a total of **07:06:06** typing.
 
-Keep practicing and aim to improve your recent performance! This summary provides both a historical view and insight into your latest results.
-        
+This summary gives you a historical overview and a snapshot of your recent results for easy comparison.

@@ -38,10 +38,11 @@ params = {
 
 # Full url
 url = BASE_URL + results_endpoint
-
+#print(url)
 # Api request
 response = requests.get(url, headers=headers, params=params)
 
+#print(response)
 
 # Sql table create query
 sql_query = f"""CREATE TABLE IF NOT EXISTS typing_history (
@@ -68,15 +69,16 @@ sql_query = f"""CREATE TABLE IF NOT EXISTS typing_history (
 conn = sqlite3.connect('history.db')
 cursor = conn.cursor()
 
-# Delete data from db
-cursor.execute(sql_query)
-cursor.execute('DELETE FROM typing_history')
-
+# Rows counter variable
 rows_counter = 0
 # Get data
 try:
     data = response.json()  # Parse JSON
     if data['data']:
+        #print(data['data'])
+        # Delete data from db
+        cursor.execute(sql_query)
+        cursor.execute('DELETE FROM typing_history')
         # Get headers
         headers = data['data'][0].keys() 
         for row in data['data']: 
@@ -100,12 +102,12 @@ try:
         db_row_count = db_row_count[0]
     except Exception as e:
         with open ('logfile.log', 'a') as file:
-            file.write(f"""{formatDateTime} Problem with SELECT query into db -  {e}""")
+            file.write(f"""{formatDateTime} Problem with SELECT query into db - {e}\n""")
     
     conn.close()
     with open ('import_status.log', 'a') as file:
         file.write(f"""{formatDateTime} - Downloaded: {len(data['data'])} rows, Uploaded to db: {rows_counter} rows, db rows count: {db_row_count}\n""")
 except Exception as e:
     with open ('logfile.log', 'a') as file:
-        file.write(f"""{formatDateTime} Problem with inserting data {e}""")
+        file.write(f"""{formatDateTime} Problem with inserting data {e}\n""")
 
