@@ -1,9 +1,6 @@
 
 [Configuration](#configuration)
-
-## Typing History Stats (Last Updated: 13/11/2024 14:41)
-
-<center>
+## Typing History Stats (Last Updated: 13/11/2024 14:43)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
@@ -14,7 +11,7 @@
 | **Min WPM**              | 64.77               | 99.15                        |
 | **Total Duration**       | 07:11:06        | 10                        |
 
-</center>
+
 ---
 
 ### Last 10 results
