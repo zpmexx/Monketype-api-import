@@ -128,6 +128,7 @@ try:
 3. **Run get_data.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
 4. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
 5. **stats.py script will get data from db and push them into GitHub account**
+6. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
     
     """
     
