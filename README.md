@@ -1,6 +1,6 @@
 
-# [Configuration Tutorial](#configuration)
-## Typing History Stats (Last Updated: 13/11/2024 13:28)
+# [Configuration](#configuration)
+## Typing History Stats (Last Updated: 13/11/2024 13:30)
 
 | **Metric**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
@@ -51,7 +51,7 @@
  --- 
 
 
-## Configiuration
+## Configuration
 
 1. **Get API Key from account settings -> ape keys -> generate new key**
 2. **Add generated api key to .env file variable apikey**
