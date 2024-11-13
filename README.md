@@ -1,5 +1,5 @@
 
-# [Configuration](#configuration)
+[Configuration](#configuration)
 ## Typing History Stats (Last Updated: 13/11/2024 13:31)
 
 | **Metric**               | **Overall Stats**       | **Last 10 Tests Stats**  |
