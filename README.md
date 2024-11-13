@@ -1,8 +1,8 @@
 
 [Configuration](#configuration)
-## Typing History Stats (Last Updated: 13/11/2024 13:32)
+## Typing History Stats (Last Updated: 13/11/2024 14:37)
 
-| **Metric**               | **Overall Stats**       | **Last 10 Tests Stats**  |
+| **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
 | **Total Entries**        | 860           | 00:05:00                       |
 | **Average WPM**          | 102.75           | 111.54    |
@@ -16,7 +16,7 @@
 
 ### Last 10 results
 
-| WPM | Accuracy | Consistency | Mode | Timestamp |
+| WPM | Accuracy | Consistency | Mode | Date |
 | --- | -------- | ----------- | ---- | --------- |
 | 107.19 | 93.65 | 87.28 | time 30 | 12-11-2024 17:15:29 |
 | 111.57 | 94.94 | 84.55 | time 30 | 12-11-2024 17:12:09 |
@@ -34,7 +34,7 @@
 
 ### Top 10 results
 
-| WPM | Accuracy | Consistency | Mode | Timestamp |
+| WPM | Accuracy | Consistency | Mode | Date |
 | --- | -------- | ----------- | ---- | --------- |
 | 129.13 | 97.93 | 87.46 | time 30 | 20-07-2024 16:54:21 |
 | 126.37 | 99.08 | 86.0 | time 30 | 05-08-2024 14:25:56 |
@@ -58,5 +58,6 @@
 3. **Run get_data.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
 4. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
 5. **stats.py script will get data from db and push them into GitHub account**
+6. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
     
     
