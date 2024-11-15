@@ -1,6 +1,6 @@
 
 [Configuration](#configuration)
-## Typing History Stats (Last Updated: 15/11/2024 15:28)
+## Typing History Stats (Last Updated: 15/11/2024 15:40)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
@@ -55,9 +55,14 @@
 
 1. **Get API Key from account settings -> ape keys -> generate new key -> check active button next to apekey's name**
 2. **Add generated api key to .env file variable apikey**
-3. **Run get_data.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
+3. **(If you've got less than 1000 tests completed) Run get_data_max_1000.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
 4. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
 5. **stats.py script will get data from db and push them into GitHub account**
 6. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
+
+# UPDATE for 1000+ tests
     
+**As monkeytype API enables just 1000 rows to be downloaded via API call, for proper inintial insertion to db tests where there are more than 1000 on your profile
+you should export csv file from [Monkeytype account](https://monkeytype.com/account) (over results at the bottom of the site)
+and put this csv file into project folder (or set proper path to this file into variable csv_file), then run inintial_csv_read.py script.**
     
