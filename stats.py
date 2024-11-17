@@ -94,11 +94,22 @@ def runFunction():
         # End program
         sys.exit() 
 
-            
-    # Readme content update
-    try:
+    
+    profile_name = 'zp14' # set your public profile name
+    
+    if profile_name:
         markdown_table = f"""
 [Configuration](#configuration)
+## My public Monkeytype [profile](https://monkeytype.com/profile/{profile_name})\n\n
+        """
+    else:
+        markdown_table = f""" 
+[Configuration](#configuration)
+        """     
+    
+    # Readme content update
+    try:
+        markdown_table += f"""
 ## Typing History Stats (Last Updated: {formatDateTime})
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
