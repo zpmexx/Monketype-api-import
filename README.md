@@ -12,7 +12,7 @@
 | **Total Duration**       | 07:19:36        | 10                        |
 
 
-    ---
+---
 
     ### Last 10 results
 
