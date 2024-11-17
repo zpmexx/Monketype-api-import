@@ -1,15 +1,14 @@
 
-[Configuration](#configuration)
-## Typing History Stats (Last Updated: 17/11/2024 17:33)
+## Typing History Stats (Last Updated: 17/11/2024 21:31)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
-| **Total Entries**        | 880           | 00:05:00                       |
+| **Total Entries**        | 880           | 10                       |
 | **Average WPM**          | 102.82           | 105.98    |
 | **Average Accuracy**     | 90.87%          | 90.10%   |
 | **Max WPM**              | 129.13               | 121.16        |
 | **Min WPM**              | 64.77               | 87.17                        |
-| **Total Duration**       | 07:21:06        | 10                        |
+| **Total Duration**       | 07:21:06        | 00:05:00                        |
 
 
 ---
@@ -58,6 +57,7 @@
 4. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
 5. **stats.py script will get data from db and push them into GitHub account**
 6. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
+7. **incremental_import.py will check for the last result time in db and download just those tests that are younger than that. It will also update automatically into GitHub account unless you comment last 2 line of code.**
 
 # UPDATE for 1000+ tests
     
