@@ -7,6 +7,9 @@ import sqlite3
 import json
 import sys
 
+# Import stats.py code function
+from stats import runFunction
+
 now = formatDateTime = None
 try:
     now = datetime.now()
@@ -63,7 +66,7 @@ try:
     # Api request
     response = requests.get(url, headers=headers, params=params)
     data = response.json()  # Parse JSON
-    print(data['data'])
+    #print(data['data'])
     if data['data']:
         without_last_data = data['data'][:-1] # Monkeytype api fetch result with given timestamp, therefore its needed to ignore this element
         for row in without_last_data:
@@ -89,7 +92,7 @@ except Exception as e:
 
 db_row_count = 0
 try:
-    db_row_count = cursor.execute("SELECT COUNT(*) FROM typing_history where timestamp > ?", (last_timestamp)).fetchone()
+    db_row_count = cursor.execute("SELECT COUNT(*) FROM typing_history where timestamp > ?", (last_timestamp,)).fetchone()[0]
     print(db_row_count)
 except Exception as e:
     with open ('logfile.log', 'a') as file:
@@ -101,5 +104,10 @@ try:
 except Exception as e:
     with open ('logfile.log', 'a') as file:
         file.write(f"""{formatDateTime} Problem with import_status.log file - {e}\n""")
-
+        
 conn.close()
+
+# Run stats code if there was any changes and downloaded data == imported to db data
+# You delete/comment this two lines if you dont want to upload into github automatically
+if rows_counter >0 and rows_counter == inserted_to_db_rows == db_row_count:
+    runFunction()
