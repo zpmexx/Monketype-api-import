@@ -1,5 +1,10 @@
 
-## Typing History Stats (Last Updated: 17/11/2024 21:31)
+[Configuration](#configuration)
+## My public Monkeytype profile [Monkeytype](https://monkeytype.com/profile/s)
+
+
+        
+## Typing History Stats (Last Updated: 17/11/2024 21:32)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
