@@ -1,6 +1,6 @@
 
 [Configuration](#configuration)
-## My public Monkeytype profile [Monkeytype](https://monkeytype.com/profile/s)
+## My public Monkeytype [profile](https://monkeytype.com/profile/zp14)
 
 
         
