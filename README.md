@@ -13,7 +13,7 @@
 
 
 ---
-    ### Last 10 results
+### Last 10 results
 
 | WPM | Accuracy | Consistency | Mode | Date |
 | --- | -------- | ----------- | ---- | --------- |
