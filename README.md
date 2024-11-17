@@ -1,6 +1,6 @@
 
 [Configuration](#configuration)
-## Typing History Stats (Last Updated: 17/11/2024 17:25)
+## Typing History Stats (Last Updated: 17/11/2024 17:27)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
@@ -13,7 +13,6 @@
 
 
 ---
-
     ### Last 10 results
 
 | WPM | Accuracy | Consistency | Mode | Date |
