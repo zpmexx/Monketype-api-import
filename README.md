@@ -4,7 +4,7 @@
 
 
         
-## Typing History Stats (Last Updated: 18/11/2024 17:06)
+## Typing History Stats (Last Updated: 18/11/2024 17:11)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
@@ -58,6 +58,7 @@
 
 1. **Get API Key from account settings -> ape keys -> generate new key -> check active button next to apekey's name**
 2. **Add generated api key to .env file variable apikey**
+3. **Install modules** `pip install -r req.txt`
 3. **(If you've got less than 1000 tests completed) Run get_data_max_1000.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
 4. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
 5. **stats.py script will get data from db and push them into GitHub account**
