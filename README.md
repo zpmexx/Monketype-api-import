@@ -4,7 +4,7 @@
 
 
         
-## Typing History Stats (Last Updated: 18/11/2024 18:03)
+## Typing History Stats (Last Updated: 18/11/2024 19:19)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
@@ -57,6 +57,7 @@
 
         
 ![speed trend](typing_speed_trend.png)
+![counted chart](count_tests.png)
 # Configuration
 
 1. **Get API Key from account settings -> ape keys -> generate new key -> check active button next to apekey's name**
