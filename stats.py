@@ -2,6 +2,8 @@ import sqlite3
 import subprocess
 from datetime import datetime
 import sys
+import os
+from charts import create_and_export_charts
 
 def runFunction():
     now = formatDateTime = None
@@ -58,13 +60,15 @@ def runFunction():
         
         result = cursor.fetchall()
         markdown_last_10_table = None
+        counter = 0
         if result:
             markdown_last_10_table = "### Last 10 results\n\n"
-            markdown_last_10_table += "| WPM | Accuracy | Consistency | Mode | Date |\n"
-            markdown_last_10_table += "| --- | -------- | ----------- | ---- | --------- |\n"
+            markdown_last_10_table += "| | WPM | Accuracy | Consistency | Mode | Date |\n"
+            markdown_last_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
             # Populate table rows dynamically
             for row in result:
-                markdown_last_10_table += f"| {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
+                counter += 1
+                markdown_last_10_table += f"| {counter} | {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
             markdown_last_10_table += "\n\n --- \n\n"
         
         # Top 10 test whole data
@@ -73,15 +77,17 @@ def runFunction():
         
         result = cursor.fetchall()
         markdown_top_10_table = None
+        counter = 0
         if result:
             markdown_top_10_table = "### Top 10 results\n\n"
-            markdown_top_10_table += "| WPM | Accuracy | Consistency | Mode | Date |\n"
-            markdown_top_10_table += "| --- | -------- | ----------- | ---- | --------- |\n"
+            markdown_top_10_table += "| | WPM | Accuracy | Consistency | Mode | Date |\n"
+            markdown_top_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
         
             
             # Populate table rows dynamically
             for row in result:
-                markdown_top_10_table += f"| {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
+                counter +=1
+                markdown_top_10_table += f"| {counter} | {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
             markdown_top_10_table += "\n\n --- \n\n"
         # Close db connection
         conn.close()
@@ -107,6 +113,11 @@ def runFunction():
 [Configuration](#configuration)
         """     
     
+    try:
+        create_and_export_charts()
+    except Exception as e:
+        with open ('logfile.log', 'a') as file:
+            file.write(f"""{formatDateTime} Problem with creating charts - {str(e)}\n""")
     # Readme content update
     try:
         markdown_table += f"""
@@ -123,6 +134,7 @@ def runFunction():
 
 
 ---
+
 """
         if markdown_last_10_table:
             markdown_table += markdown_last_10_table
@@ -131,10 +143,14 @@ def runFunction():
             markdown_table +=  markdown_top_10_table
     
         configuration_markdown = f"""
+        
+![speed trend](typing_speed_trend.png)
+![counted chart](count_tests.png)
 # Configuration
 
 1. **Get API Key from account settings -> ape keys -> generate new key -> check active button next to apekey's name**
 2. **Add generated api key to .env file variable apikey**
+3. **Install modules** `pip install -r req.txt`
 3. **(If you've got less than 1000 tests completed) Run get_data_max_1000.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
 4. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
 5. **stats.py script will get data from db and push them into GitHub account**
@@ -162,6 +178,13 @@ and put this csv file into project folder (or set proper path to this file into 
     # Push readme file to github
     try:
         subprocess.run(["git", "add", "README.md"])  # Add the README file to git
+        typing_speed_chart_file = "typing_speed_trend.png"
+        count_tests_chart_file = "count_tests.png"
+        if os.path.exists(typing_speed_chart_file):
+            subprocess.run(["git", "add", "typing_speed_trend.png"])
+        if os.path.exists(count_tests_chart_file):
+            subprocess.run(["git", "add", "count_tests.png"])
+        
         subprocess.run(["git", "commit", "-m", f"Update README with new stats ({formatDateTime})"])  # Commit the change
         
         # Set branch to main/master or specific
