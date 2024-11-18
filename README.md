@@ -20,7 +20,7 @@
 
 ### Last 10 results
 
-| | WPM | Accuracy | Consistency | Mode | Date |
+| s | WPM | Accuracy | Consistency | Mode | Date |
 | --- | -------- | ----------- | ---- | --------- |
 | 1 | 120.8 | 97.8 | 84.29 | time 30 | 18-11-2024 16:06:09 |
 | 2 | 104.4 | 91.08 | 85.05 | time 30 | 18-11-2024 16:05:29 |
@@ -38,7 +38,7 @@
 
 ### Top 10 results
 
-|  | WPM | Accuracy | Consistency | Mode | Date |
+| s | WPM | Accuracy | Consistency | Mode | Date |
 | --- | -------- | ----------- | ---- | --------- |
 | 1 | 129.13 | 97.93 | 87.46 | time 30 | 20-07-2024 16:54:21 |
 | 2 | 126.37 | 99.08 | 86.0 | time 30 | 05-08-2024 14:25:56 |
