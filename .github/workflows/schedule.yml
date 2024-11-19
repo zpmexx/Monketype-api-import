@@ -19,4 +19,4 @@ jobs:
         run: |
           pip install -r requirements.txt || echo "No dependencies to install."
       - name: Run Python script
-        run: python script.py
+        run: python incremental_import.py
