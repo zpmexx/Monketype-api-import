@@ -1,9 +1,11 @@
 name: Run Script Daily
 
-# Schedule the workflow to run every day at 9:00 AM UTC
 on:
   schedule:
+    # Cron expression to run daily at 16:36 UTC (equivalent to 17:36 CET)
     - cron: "36 16 * * *"
+  workflow_dispatch:  # Allow manual triggering
+
 
 jobs:
   run-script:
@@ -11,12 +13,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Use your required Python version
+          python-version: '3.x'  # You can specify a more specific version like '3.8' or '3.9'
+
       - name: Install dependencies
         run: |
+          # Ensure you have a requirements.txt file in your repo, or handle missing requirements
           pip install -r requirements.txt || echo "No dependencies to install."
+
       - name: Run Python script
-        run: python incremental_import.py
+        run: python incremental_import.py  # Ensure 'incremental_import.py' exists in the repo
