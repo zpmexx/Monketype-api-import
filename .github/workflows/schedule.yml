@@ -1,0 +1,22 @@
+name: Run Script Daily
+
+# Schedule the workflow to run every day at 9:00 AM UTC
+on:
+  schedule:
+    - cron: "36 16 * * *"
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Use your required Python version
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || echo "No dependencies to install."
+      - name: Run Python script
+        run: python script.py
