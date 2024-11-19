@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           # Ensure you have a requirements.txt file in your repo, or handle missing requirements
-          pip install -r requirements.txt || echo "No dependencies to install."
+          pip install -r req.txt || echo "No dependencies to install."
 
       - name: Run Python script
         run: python incremental_import.py  # Ensure 'incremental_import.py' exists in the repo
