@@ -25,4 +25,6 @@ jobs:
           pip install -r req.txt || echo "No dependencies to install."
 
       - name: Run Python script
+        env:
+          MY_API_KEY: ${{ secrets.apikey }}
         run: python incremental_import.py  # Ensure 'incremental_import.py' exists in the repo
