@@ -4,7 +4,7 @@ from datetime import datetime
 import sys
 import os
 from charts import create_and_export_charts
-
+print("stats")
 def runFunction():
     now = formatDateTime = None
     try:

@@ -114,4 +114,5 @@ print("before runfunction")
 # Run stats code if there was any changes and downloaded data == imported to db data
 # You delete/comment this two lines if you dont want to upload into github automatically
 if rows_counter >0 and rows_counter == inserted_to_db_rows == db_row_count:
+    print("insided run ficoton")
     runFunction()
