@@ -26,5 +26,5 @@ jobs:
 
       - name: Run Python script
         env:
-          apikey: ${{ secrets.apikey }}
+          apikey: ${{ secrets.APIKEY }}
         run: python incremental_import.py  # Ensure 'incremental_import.py' exists in the repo
