@@ -7,6 +7,8 @@ import sqlite3
 import json
 import sys
 
+print("test")
+
 # Import stats.py code function
 from stats import runFunction
 
@@ -20,7 +22,6 @@ except Exception as e:
 
 # List of required db columns
 db_columns = ['_id', 'wpm', 'rawWpm', 'charStats', 'acc', 'mode', 'mode2', 'consistency', 'timestamp', 'testDuration']
-
 
 # Sqlite connection
 try:
