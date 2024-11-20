@@ -28,6 +28,7 @@ try:
     conn = sqlite3.connect('history.db')
     cursor = conn.cursor()
 except Exception as e:
+    print(e)
     with open ('logfile.log', 'a') as file:
         file.write(f"""{formatDateTime} Problem with history.db - {e}\n""")
     sys.exit(0)
