@@ -6,7 +6,6 @@ on:
     - cron: "36 16 * * *"
   workflow_dispatch:  # Allow manual triggering
 
-
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -26,5 +25,18 @@ jobs:
 
       - name: Run Python script
         env:
-          apikey: ${{ secrets.APIKEY }}
+          apikey: ${{ secrets.APIKEY }}  # Use your custom API key secret here
         run: python incremental_import.py  # Ensure 'incremental_import.py' exists in the repo
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "zp"
+          git config --global user.email "your-email@example.com"
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Automated commit from GitHub Actions"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided token to authenticate
