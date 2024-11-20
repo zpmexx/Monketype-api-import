@@ -7,6 +7,8 @@ import sqlite3
 import json
 import sys
 
+print("test")
+
 # Import stats.py code function
 from stats import runFunction
 
@@ -20,13 +22,13 @@ except Exception as e:
 
 # List of required db columns
 db_columns = ['_id', 'wpm', 'rawWpm', 'charStats', 'acc', 'mode', 'mode2', 'consistency', 'timestamp', 'testDuration']
-
-
+print("before sqllite")
 # Sqlite connection
 try:
     conn = sqlite3.connect('history.db')
     cursor = conn.cursor()
 except Exception as e:
+    print(e)
     with open ('logfile.log', 'a') as file:
         file.write(f"""{formatDateTime} Problem with history.db - {e}\n""")
     sys.exit(0)
@@ -40,11 +42,12 @@ except Exception as e:
         file.write(f"""Problem with getting last date from db - {str(e)}\n""")
     sys.exit(0)
 
-
+print("before apikey")
 #load env variables
 load_dotenv()
 API_KEY = os.getenv('apikey') # Personal API KEY from .env file
 
+print(API_KEY)
 BASE_URL = 'https://api.monkeytype.com/'
 
 # Endpoint variables
@@ -64,6 +67,7 @@ url = BASE_URL + results_endpoint
 rows_counter = inserted_to_db_rows = 0
 try:
     # Api request
+    print("before request")
     response = requests.get(url, headers=headers, params=params)
     data = response.json()  # Parse JSON
     #print(data['data'])
@@ -106,7 +110,7 @@ except Exception as e:
         file.write(f"""{formatDateTime} Problem with import_status.log file - {e}\n""")
         
 conn.close()
-
+print("before runfunction")
 # Run stats code if there was any changes and downloaded data == imported to db data
 # You delete/comment this two lines if you dont want to upload into github automatically
 if rows_counter >0 and rows_counter == inserted_to_db_rows == db_row_count:

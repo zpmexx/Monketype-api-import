@@ -6,7 +6,6 @@ on:
     - cron: "36 16 * * *"
   workflow_dispatch:  # Allow manual triggering
 
-
 jobs:
   run-script:
     runs-on: ubuntu-latest
@@ -22,7 +21,17 @@ jobs:
       - name: Install dependencies
         run: |
           # Ensure you have a requirements.txt file in your repo, or handle missing requirements
-          pip install -r requirements.txt || echo "No dependencies to install."
+          pip install -r req.txt || echo "No dependencies to install."
 
       - name: Run Python script
+        env:
+          apikey: ${{ secrets.APIKEY }}  # Use your custom API key secret here
         run: python incremental_import.py  # Ensure 'incremental_import.py' exists in the repo
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "zp"
+          git config --global user.email "your-email@example.com"
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided token to authenticate
