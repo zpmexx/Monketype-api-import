@@ -61,6 +61,7 @@ def runFunction():
         result = cursor.fetchall()
         markdown_last_10_table = None
         counter = 0
+        
         if result:
             markdown_last_10_table = "### Last 10 results\n\n"
             markdown_last_10_table += "| | WPM | Accuracy | Consistency | Mode | Date |\n"
@@ -89,6 +90,69 @@ def runFunction():
                 counter +=1
                 markdown_top_10_table += f"| {counter} | {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
             markdown_top_10_table += "\n\n --- \n\n"
+            
+            
+        # Avg data for latest 10 dates
+        cursor.execute("""
+        SELECT 
+            DATE(timestamp / 1000, 'unixepoch') AS date,
+            COUNT(*) AS test_count,
+            ROUND(AVG(wpm), 2) AS avg_wpm,
+            ROUND(AVG(acc), 2) AS avg_accuracy,
+            ROUND(AVG(consistency), 2) AS avg_consistency
+            FROM typing_history
+            GROUP BY date
+            ORDER BY date DESC
+            LIMIT 10
+            """)
+        
+        result = cursor.fetchall()
+        mardown_avg_data_for_latest_10_table = None
+        counter = 0
+        
+        if result:
+            mardown_avg_data_for_latest_10_table = "### Avg data for latest 10 dates\n\n"
+            mardown_avg_data_for_latest_10_table += "| | Date | Tests | WPM | Acuracy | Consistency |\n"
+            mardown_avg_data_for_latest_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
+
+            for row in result:
+                counter +=1
+                mardown_avg_data_for_latest_10_table += f"| {counter} | {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
+            mardown_avg_data_for_latest_10_table += "\n\n --- \n\n"
+            
+
+        # Avg data for top 10 dates
+        
+        # Minimum tests count for specific date to be show
+        minimum_tests = 7
+        cursor.execute("""
+         SELECT 
+            DATE(timestamp / 1000, 'unixepoch') AS date,
+            COUNT(*) AS test_count,
+            ROUND(AVG(wpm), 2) AS avg_wpm,
+            ROUND(AVG(acc), 2) AS avg_accuracy,
+            ROUND(AVG(consistency), 2) AS avg_consistency
+            FROM typing_history
+            GROUP BY date
+            HAVING test_count > ?
+            ORDER BY avg_wpm DESC
+            LIMIT 10
+            """, (minimum_tests,))
+        
+        result = cursor.fetchall()
+        mardown_avg_data_for_top_10_table = None
+        counter = 0
+        
+        if result:
+            mardown_avg_data_for_top_10_table = f"### Avg data for top 10 dates (minimum {minimum_tests} tests)\n\n"
+            mardown_avg_data_for_top_10_table += "| | Date | Tests | WPM | Acuracy | Consistency |\n"
+            mardown_avg_data_for_top_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
+
+            for row in result:
+                counter +=1
+                mardown_avg_data_for_top_10_table += f"| {counter} | {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
+            mardown_avg_data_for_top_10_table += "\n\n --- \n\n"
+            
         # Close db connection
         conn.close()
     except Exception as e:
@@ -141,6 +205,12 @@ def runFunction():
             
         if  markdown_top_10_table:
             markdown_table +=  markdown_top_10_table
+            
+        if mardown_avg_data_for_latest_10_table:
+            markdown_table += mardown_avg_data_for_latest_10_table
+        
+        if mardown_avg_data_for_top_10_table:
+            markdown_table += mardown_avg_data_for_top_10_table
     
         configuration_markdown = f"""
         
