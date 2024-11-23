@@ -4,7 +4,7 @@
 
 
         
-## Typing History Stats (Last Updated: 23/11/2024 17:17)
+## Typing History Stats (Last Updated: 23/11/2024 17:18)
 
 | **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
@@ -18,7 +18,7 @@
 
 ---
 
-### Avg data for last 10 results
+### Avg data for latest 10 dates
 
 | | Date | Tests | WPM | Acuracy | Consistency |
 | --- | --- | -------- | ----------- | ---- | --------- |
