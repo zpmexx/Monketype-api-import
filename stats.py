@@ -217,15 +217,16 @@ def runFunction():
 ![speed trend](typing_speed_trend.png)
 ![counted chart](count_tests.png)
 # Configuration
-
-1. **Get API Key from account settings -> ape keys -> generate new key -> check active button next to apekey's name**
-2. **Add generated api key to .env file variable apikey**
-3. **Install modules** `pip install -r req.txt`
-3. **(If you've got less than 1000 tests completed) Run get_data_max_1000.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
-4. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
-5. **stats.py script will get data from db and push them into GitHub account**
-6. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
-7. **incremental_import.py will check for the last result time in db and download just those tests that are younger than that. It will also update automatically into GitHub account unless you comment last 2 line of code.**
+1. **Fork this repository** 
+2. **Download repository** `git clone https://github.com/YOUR_ACCOUNT_NAME/Monketype-api-import.git`
+3. **Login to your account, get API Key from account settings -> ape keys -> generate new key -> check active button next to apekey's name**
+4. **Add generated api key to .env file, variable name apikey in your project catalog**  `echo apikey = YOUR_APE_KEY >> .env` in terminal/cmd
+5. **Install required modules (preferably in a virtual environment `virtualenv`)** `pip install -r req.txt`
+6. **(If you've got less than 1000 tests completed) Run get_data_max_1000.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
+7. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
+8. **stats.py script will get data from db and push them into GitHub account**
+9. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
+10. **incremental_import.py will check for the last result time in db and download just those tests that are younger than that. It will also update automatically into GitHub account unless you comment last 2 line of code. You may set execution of this script in CRON/Task scheduler to automatically import data to db and push to your GitHub account.**
 
 # UPDATE for 1000+ tests
     
