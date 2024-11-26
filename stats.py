@@ -5,6 +5,9 @@ import sys
 import os
 from charts import create_and_export_charts
 def runFunction():
+    
+    timezon_correction = 1 # Set time correction to your timezone (Default GMT - London)
+    
     now = formatDateTime = None
     try:
         now = datetime.now()
@@ -54,7 +57,7 @@ def runFunction():
         count_last_10 = result[11]
         
         # Last 10 test whole data
-        cursor.execute("""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', timestamp / 1000, 'unixepoch')
+        cursor.execute(f"""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', (timestamp / 1000) + 3600 * {timezon_correction}, 'unixepoch')
                             from typing_history order by timestamp DESC LIMIT 10 """)
         
         result = cursor.fetchall()
@@ -72,7 +75,7 @@ def runFunction():
             markdown_last_10_table += "\n\n --- \n\n"
         
         # Top 10 test whole data
-        cursor.execute("""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', timestamp / 1000, 'unixepoch')
+        cursor.execute(f"""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', (timestamp / 1000) + 3600 * {timezon_correction}, 'unixepoch')
                             from typing_history order by wpm DESC LIMIT 10 """)
         
         result = cursor.fetchall()
@@ -90,7 +93,7 @@ def runFunction():
                 markdown_top_10_table += f"| {counter} | {row[0]} | {row[1]} | {row[2]} | {row[3]} | {row[4]} |\n"
             markdown_top_10_table += "\n\n --- \n\n"
             
-            
+        
         # Avg data for latest 10 dates
         cursor.execute("""
         SELECT 
@@ -226,7 +229,7 @@ def runFunction():
 8. **stats.py script will get data from db and push them into GitHub account**
 9. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
 10. **incremental_import.py will check for the last result time in db and download just those tests that are younger than that. It will also update automatically into GitHub account unless you comment last 2 line of code. You may set execution of this script in CRON/Task scheduler to automatically import data to db and push to your GitHub account.**
-
+11. **You can fix timezone in stats.py file, line 9 ` timezon_correction = 1 # Set time correction to your timezone (Default GMT - London)`**
 # UPDATE for 1000+ tests
     
 **As monkeytype API enables just 1000 rows to be downloaded via API call, for proper inintial insertion to db tests where there are more than 1000 on your profile
