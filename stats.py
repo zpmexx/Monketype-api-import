@@ -232,9 +232,12 @@ def runFunction():
 11. **You can fix timezone in stats.py file, line 9 ` timezon_correction = 1 # Set time correction to your timezone (Default GMT - London)`**
 # UPDATE for 1000+ tests
     
-**As monkeytype API enables just 1000 rows to be downloaded via API call, for proper inintial insertion to db tests where there are more than 1000 on your profile
+~~**As monkeytype API enables just 1000 rows to be downloaded via API call, for proper inintial insertion to db tests where there are more than 1000 on your profile
 you should export csv file from [Monkeytype account](https://monkeytype.com/account) (over results at the bottom of the site)
-and put this csv file into project folder (or set proper path to this file into variable csv_file), then run inintial_csv_read.py script.**
+and put this csv file into project folder (or set proper path to this file into variable csv_file), then run inintial_csv_read.py script.**~~
+
+**As of now, there's no option to download data older than 1000 rows via API or csv file, Monketype founder plans to address this in the future**
+    
     """
         
         
