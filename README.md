@@ -4,9 +4,9 @@
 
 
         
-## Typing History Stats (Last Updated: 03/05/2025 21:12)
+## Typing History Stats (Last Updated: 03/05/2025 21:13)
 
-| **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
+| **Key Stats**               | **Overall Stats**       | **Last 20 Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
 | **Total Entries**        | 1779           | 20                       |
 | **Average WPM**          | 106.00           | 108.41    |
