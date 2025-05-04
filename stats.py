@@ -148,7 +148,7 @@ def runFunction():
             ROUND(AVG(consistency), 2) AS avg_consistency
             FROM typing_history
             GROUP BY date
-            HAVING test_count > ?
+            HAVING test_count >= ?
             ORDER BY avg_wpm DESC
             LIMIT {avg_top_dates_table}
             """, (avg_top_dates_minimum_test,))
