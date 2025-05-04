@@ -60,6 +60,6 @@ config_all += config_text
 content_all += content
 
 
-with open("other_stats.md", "w") as file:
+with open("other stats\other_stats.md", "w") as file:
     file.write(config_all)
     file.write(content_all)
