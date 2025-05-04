@@ -4,9 +4,20 @@ from datetime import datetime
 import sys
 import os
 from charts import create_and_export_charts
+from config import main_readme
 def runFunction():
     
-    timezon_correction = 1 # Set time correction to your timezone (Default GMT - London)
+    # Load configuration from config.py
+    timezone_correction = main_readme['timezone_correction'] 
+    profile_name = main_readme["profile_name"]  # Username on GitHub
+
+    last_results_table_compare = main_readme["last_results_table_compare"]  # First table that compares all data with N last results
+    last_result_table = main_readme["last_result_table"]  # Number of results to show in the "Last results" table
+    top_results_table = main_readme["top_results_table"]  # Number of results to show in the "Top results" table (best all-time results)
+
+    avg_last_dates_table = main_readme["avg_last_dates_table"]  # Number of entries to show in the "Average last dates" table (per-day averages)
+    avg_top_dates_table = main_readme["avg_top_dates_table"]  # Number of entries to show in the "Average top dates" table (top daily averages)
+    avg_top_dates_minimum_test = main_readme["avg_top_dates_minimum_test"]  # Minimum number of tests per day to include in "Average top dates"
     
     now = formatDateTime = None
     try:
@@ -20,8 +31,10 @@ def runFunction():
     try:
         conn = sqlite3.connect('history.db')
         cursor = conn.cursor()
-        # Select query
-        cursor.execute("""
+        # Select query for entire database
+        # Get the total number of entries, average wpm, average accuracy, max wpm, min wpm, total duration
+        # and last 10 entries average wpm, average accuracy, max wpm, min wpm, total duration
+        cursor.execute(f"""
         SELECT 
             COUNT(*) AS total_count,
             AVG(wpm) AS avg_wpm,
@@ -29,12 +42,12 @@ def runFunction():
             MAX(wpm) AS max_wpm,
             MIN(wpm) AS min_wpm,
             STRFTIME('%H:%M:%S', SUM(testDuration), 'unixepoch') AS total_duration,
-            (SELECT AVG(wpm) FROM (SELECT wpm FROM typing_history ORDER BY timestamp DESC LIMIT 10)) AS avg_wpm_last_10,
-            (SELECT AVG(acc) FROM (SELECT acc FROM typing_history ORDER BY timestamp DESC LIMIT 10)) AS avg_acc_last_10,
-            (SELECT MAX(wpm) FROM (SELECT wpm FROM typing_history ORDER BY timestamp DESC LIMIT 10)) AS max_wpm_last_10,
-            (SELECT MIN(wpm) FROM (SELECT wpm FROM typing_history ORDER BY timestamp DESC LIMIT 10)) AS min_wpm_last_10,
-            STRFTIME('%H:%M:%S', (SELECT SUM(testDuration) FROM (SELECT testDuration FROM typing_history ORDER BY timestamp DESC LIMIT 10)), 'unixepoch') AS sum_duration_last_10,
-            (SELECT COUNT(*) FROM (SELECT * FROM typing_history ORDER BY timestamp DESC LIMIT 10)) AS count_last_10
+            (SELECT AVG(wpm) FROM (SELECT wpm FROM typing_history ORDER BY timestamp DESC LIMIT {last_results_table_compare})) AS avg_wpm_last_10,
+            (SELECT AVG(acc) FROM (SELECT acc FROM typing_history ORDER BY timestamp DESC LIMIT {last_results_table_compare})) AS avg_acc_last_10,
+            (SELECT MAX(wpm) FROM (SELECT wpm FROM typing_history ORDER BY timestamp DESC LIMIT {last_results_table_compare})) AS max_wpm_last_10,
+            (SELECT MIN(wpm) FROM (SELECT wpm FROM typing_history ORDER BY timestamp DESC LIMIT {last_results_table_compare})) AS min_wpm_last_10,
+            STRFTIME('%H:%M:%S', (SELECT SUM(testDuration) FROM (SELECT testDuration FROM typing_history ORDER BY timestamp DESC LIMIT {last_results_table_compare})), 'unixepoch') AS sum_duration_last_10,
+            (SELECT COUNT(*) FROM (SELECT * FROM typing_history ORDER BY timestamp DESC LIMIT {last_results_table_compare})) AS count_last_10
         FROM typing_history;
     """)
 
@@ -48,7 +61,7 @@ def runFunction():
         min_wpm = result[4]
         total_duration = result[5]
 
-        # Last 10 results stats variables
+        # Last x results stats variables
         avg_wpm_last_10 = result[6]
         avg_acc_last_10 = result[7]
         max_wpm_last_10 = result[8]
@@ -57,15 +70,15 @@ def runFunction():
         count_last_10 = result[11]
         
         # Last 10 test whole data
-        cursor.execute(f"""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', (timestamp / 1000) + 3600 * {timezon_correction}, 'unixepoch')
-                            from typing_history order by timestamp DESC LIMIT 10 """)
+        cursor.execute(f"""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', (timestamp / 1000) + 3600 * {timezone_correction}, 'unixepoch')
+                            from typing_history order by timestamp DESC LIMIT {last_result_table} """)
         
         result = cursor.fetchall()
         markdown_last_10_table = None
         counter = 0
         
         if result:
-            markdown_last_10_table = "### Last 10 results\n\n"
+            markdown_last_10_table = f"### Last {last_result_table} results\n\n"
             markdown_last_10_table += "| | WPM | Accuracy | Consistency | Mode | Date |\n"
             markdown_last_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
             # Populate table rows dynamically
@@ -75,14 +88,14 @@ def runFunction():
             markdown_last_10_table += "\n\n --- \n\n"
         
         # Top 10 test whole data
-        cursor.execute(f"""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', (timestamp / 1000) + 3600 * {timezon_correction}, 'unixepoch')
-                            from typing_history order by wpm DESC LIMIT 10 """)
+        cursor.execute(f"""SELECT wpm, acc, consistency, mode || ' ' || mode2 AS mode, STRFTIME('%d-%m-%Y %H:%M:%S', (timestamp / 1000) + 3600 * {timezone_correction}, 'unixepoch')
+                            from typing_history order by wpm DESC LIMIT {top_results_table} """)
         
         result = cursor.fetchall()
         markdown_top_10_table = None
         counter = 0
         if result:
-            markdown_top_10_table = "### Top 10 results\n\n"
+            markdown_top_10_table = f"### Top {top_results_table} results\n\n"
             markdown_top_10_table += "| | WPM | Accuracy | Consistency | Mode | Date |\n"
             markdown_top_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
         
@@ -95,7 +108,7 @@ def runFunction():
             
         
         # Avg data for latest 10 dates
-        cursor.execute("""
+        cursor.execute(f"""
         SELECT 
             DATE(timestamp / 1000, 'unixepoch') AS date,
             COUNT(*) AS test_count,
@@ -105,7 +118,7 @@ def runFunction():
             FROM typing_history
             GROUP BY date
             ORDER BY date DESC
-            LIMIT 10
+            LIMIT {avg_last_dates_table}
             """)
         
         result = cursor.fetchall()
@@ -113,7 +126,7 @@ def runFunction():
         counter = 0
         
         if result:
-            mardown_avg_data_for_latest_10_table = "### Avg data for latest 10 dates\n\n"
+            mardown_avg_data_for_latest_10_table = f"### Avg data for latest {avg_last_dates_table} dates\n\n"
             mardown_avg_data_for_latest_10_table += "| | Date | Tests | WPM | Acuracy | Consistency |\n"
             mardown_avg_data_for_latest_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
 
@@ -126,8 +139,7 @@ def runFunction():
         # Avg data for top 10 dates
         
         # Minimum tests count for specific date to be show
-        minimum_tests = 7
-        cursor.execute("""
+        cursor.execute(f"""
          SELECT 
             DATE(timestamp / 1000, 'unixepoch') AS date,
             COUNT(*) AS test_count,
@@ -138,15 +150,15 @@ def runFunction():
             GROUP BY date
             HAVING test_count > ?
             ORDER BY avg_wpm DESC
-            LIMIT 10
-            """, (minimum_tests,))
+            LIMIT {avg_top_dates_table}
+            """, (avg_top_dates_minimum_test,))
         
         result = cursor.fetchall()
         mardown_avg_data_for_top_10_table = None
         counter = 0
         
         if result:
-            mardown_avg_data_for_top_10_table = f"### Avg data for top 10 dates (minimum {minimum_tests} tests)\n\n"
+            mardown_avg_data_for_top_10_table = f"### Avg data for top {avg_top_dates_table} dates (minimum {avg_top_dates_minimum_test} tests)\n\n"
             mardown_avg_data_for_top_10_table += "| | Date | Tests | WPM | Acuracy | Consistency |\n"
             mardown_avg_data_for_top_10_table += "| --- | --- | -------- | ----------- | ---- | --------- |\n"
 
@@ -165,9 +177,6 @@ def runFunction():
         conn.close()
         # End program
         sys.exit() 
-
-    
-    profile_name = 'zp14' # set your public profile name
     
     if profile_name:
         markdown_table = f"""
@@ -189,7 +198,7 @@ def runFunction():
         markdown_table += f"""
 ## Typing History Stats (Last Updated: {formatDateTime})
 
-| **Key Stats**               | **Overall Stats**       | **Last 10 Tests Stats**  |
+| **Key Stats**               | **Overall Stats**       | **Last {last_results_table_compare} Tests Stats**  |
 |--------------------------|-------------------------|--------------------------|
 | **Total Entries**        | {total_count}           | {count_last_10}                       |
 | **Average WPM**          | {avg_wpm:.2f}           | {avg_wpm_last_10:.2f}    |
@@ -229,7 +238,8 @@ def runFunction():
 8. **stats.py script will get data from db and push them into GitHub account**
 9. **You can use API call via ApeKey 30 times per day, so after you reach this limit you wont get any answear and in logfile you will see *Problem with inserting data 0* row**
 10. **incremental_import.py will check for the last result time in db and download just those tests that are younger than that. It will also update automatically into GitHub account unless you comment last 2 line of code. You may set execution of this script in CRON/Task scheduler to automatically import data to db and push to your GitHub account.**
-11. **You can fix timezone in stats.py file, line 9 ` timezon_correction = 1 # Set time correction to your timezone (Default GMT - London)`**
+11. **In the config.py file, you can modify variables to control the displayed data for each table (both main readme.md file and second other stats file).**
+
 # UPDATE for 1000+ tests
     
 ~~**As monkeytype API enables just 1000 rows to be downloaded via API call, for proper inintial insertion to db tests where there are more than 1000 on your profile
