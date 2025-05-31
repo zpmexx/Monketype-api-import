@@ -1,4 +1,7 @@
 # Configuration file for main readme.md file shown on github 
+
+
+
 main_readme = {
     "timezone_correction": 1, # Timezone correction for the stats shown on github (Default GMT - London)
     "profile_name": "zp14", # Username on github

@@ -5,10 +5,13 @@ import sys
 import os
 from charts import create_and_export_charts
 from config import other_stats
+from dotenv import load_dotenv
 
 def connect_db():
     try:
-        conn = sqlite3.connect('history.db')
+        load_dotenv()
+        db_file_path = os.getenv('db_file_path') # Path to history.db file from .env file
+        conn = sqlite3.connect(db_file_path)
         return conn
     except Exception as e:
         with open ('logfile.log', 'a') as file:

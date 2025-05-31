@@ -33,7 +33,11 @@ sql_query = f"""CREATE TABLE IF NOT EXISTS typing_history (
 """
 # Sqlite connection
 try:
-    conn = sqlite3.connect('history.db')
+    load_dotenv()
+    API_KEY = os.getenv('apikey') # Personal API KEY from .env file
+    db_file_path = os.getenv('db_file_path') # Path to history.db file from .env file
+
+    conn = sqlite3.connect(db_file_path)
     cursor = conn.cursor()
     cursor.execute(sql_query)
 except Exception as e:
@@ -62,9 +66,6 @@ except Exception as e:
     sys.exit(0)
 
 
-#load env variables
-load_dotenv()
-API_KEY = os.getenv('apikey') # Personal API KEY from .env file
 
 BASE_URL = 'https://api.monkeytype.com/'
 

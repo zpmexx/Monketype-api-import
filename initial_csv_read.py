@@ -3,6 +3,8 @@ import sqlite3
 from datetime import datetime
 import sys
 import json
+import os
+from dotenv import load_dotenv
 # File name to import data
 csv_file = 'results.csv'
 
@@ -34,7 +36,10 @@ except Exception as e:
 
 # Sqlite connection
 try:
-    conn = sqlite3.connect('history.db')
+    load_dotenv()
+    API_KEY = os.getenv('apikey') # Personal API KEY from .env file
+    db_file_path = os.getenv('db_file_path') # Path to history.db file from .env file
+    conn = sqlite3.connect(db_file_path)
     cursor = conn.cursor()
 except Exception as e:
     with open ('logfile.log', 'a') as file:

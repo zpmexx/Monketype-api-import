@@ -7,6 +7,7 @@ import sqlite3
 import json
 import sys
 
+
 # Import stats.py code function
 from stats import runFunction
 
@@ -21,13 +22,23 @@ except Exception as e:
 # List of required db columns
 db_columns = ['_id', 'wpm', 'rawWpm', 'charStats', 'acc', 'mode', 'mode2', 'consistency', 'timestamp', 'testDuration']
 # Sqlite connection
+
+
+#load env variables
+load_dotenv()
+API_KEY = os.getenv('apikey') # Personal API KEY from .env file
+db_file_path = os.getenv('db_file_path') # Path to history.db file from .env file
+
+
+print(db_file_path)
 try:
-    conn = sqlite3.connect('history.db')
+    conn = sqlite3.connect(db_file_path)
     cursor = conn.cursor()
 except Exception as e:
     with open ('logfile.log', 'a') as file:
         file.write(f"""{formatDateTime} Problem with history.db - {e}\n""")
     sys.exit(0)
+
 
 # Get latest timestamp data
 try:
@@ -38,9 +49,6 @@ except Exception as e:
         file.write(f"""Problem with getting last date from db - {str(e)}\n""")
     sys.exit(0)
 
-#load env variables
-load_dotenv()
-API_KEY = os.getenv('apikey') # Personal API KEY from .env file
 
 BASE_URL = 'https://api.monkeytype.com/'
 

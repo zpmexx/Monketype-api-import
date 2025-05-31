@@ -9,6 +9,7 @@ import sys
 #load env variables
 load_dotenv()
 API_KEY = os.getenv('apikey') # Personal API KEY from .env file
+db_file_path = os.getenv('db_file_path') # Path to history.db file from .env file
 
 now = formatDateTime = None
 try:
@@ -58,7 +59,7 @@ sql_query = f"""CREATE TABLE IF NOT EXISTS typing_history (
 
 # Sqlite connection
 try:
-    conn = sqlite3.connect('history.db')
+    conn = sqlite3.connect(db_file_path)
     cursor = conn.cursor()
 except Exception as e:
     with open ('logfile.log', 'a') as file:

@@ -2,8 +2,11 @@ import matplotlib.pyplot as plt
 import pandas as pd 
 import sqlite3
 import os
+from dotenv import load_dotenv
+load_dotenv()
 def create_and_export_charts():
-    conn = sqlite3.connect('history.db')
+    db_file_path = os.getenv('db_file_path')  # Path to history.db file from .env file
+    conn = sqlite3.connect(db_file_path)
     cursor = conn.cursor()
 
 
