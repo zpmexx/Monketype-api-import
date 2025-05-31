@@ -101,7 +101,7 @@
 2. **Download repository** `git clone https://github.com/YOUR_ACCOUNT_NAME/Monketype-api-import.git`
 3. **Login to your account, get API Key from account settings -> ape keys -> generate new key -> check active button next to apekey's name**
 4. **Add generated api key to .env file, variable name apikey in your project catalog**  `echo apikey = YOUR_APE_KEY >> .env` in terminal/cmd
-5. **In .env file include also path to store database (onedrive/google disk/local PC etc.) `db_file_path = 'path	o\db\history.db'`, or just simple keep its name with db extension like `db_file_path = 'history.db'` to keep it in project folder. You may later change location of this DB in .env file but remember to copy this file first if you've got already more thatn 1000 tests (impossible to download older data as for now).
+5. **In .env file include also path to store database (onedrive/google disk/local PC etc.) `db_file_path = 'path	o\db\history.db'`, or just simple keep its name with db extension like `db_file_path = 'history.db'` to keep it in project folder. You may later change location of this DB in .env file but remember to copy this file first if you've got already more thatn 1000 tests (impossible to download older data as for now).**
 6. **Install required modules (preferably in a virtual environment `virtualenv`)** `pip install -r req.txt`
 7. **(If you've got less than 1000 tests completed) Run initial_incremental_import.py script that will load data from [Monkeytype](https://monkeytype.com/) and insert into sqllite3 db history.db (this wont be stored on your GitHub)**
 8. **Error logs will be stored into logfile.log, and import status will be stored into import_status.log**
